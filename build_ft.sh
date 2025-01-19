@@ -28,6 +28,7 @@ mkdir -p ./ft_build
 
 meson setup ft_build \
 	--default-library static \
+	--buildtype minsize \
 	--prefix "$(pwd)/ft_install" \
 	-Dharfbuzz=disabled \
 	-Dbrotli=disabled \
