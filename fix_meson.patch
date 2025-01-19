@@ -1,0 +1,59 @@
+diff --git a/freetype-VER-2-13-3/meson.build b/freetype-VER-2-13-3/meson.build
+index bedf132..eaa7232 100644
+--- a/freetype-VER-2-13-3/meson.build
++++ b/freetype-VER-2-13-3/meson.build
+@@ -95,7 +95,7 @@ foreach mod: ft_main_modules
+   ft2_sources += 'src/@0@/@1@.c'.format(mod, source)
+ endforeach
+ 
+-# NOTE: The `bzip2` aux module is handled through options.
++# NOTE: The `bzip2` aux module has been disabled.
+ ft_aux_modules = run_command(python_exe,
+   files('builds/meson/parse_modules_cfg.py'),
+   '--format=aux-modules',
+@@ -113,7 +113,7 @@ foreach auxmod: ft_aux_modules
+   elif auxmod == 'gzip'
+     source = 'ftgzip'
+   elif auxmod == 'bzip2'
+-    # Handled through options instead, see below.
++    # DISABLED!
+     continue
+   endif
+   ft2_sources += 'src/@0@/@1@.c'.format(auxmod, source)
+@@ -142,7 +142,6 @@ ft2_public_headers = files([
+   'include/freetype/ftbbox.h',
+   'include/freetype/ftbdf.h',
+   'include/freetype/ftbitmap.h',
+-  'include/freetype/ftbzip2.h',
+   'include/freetype/ftcache.h',
+   'include/freetype/ftchapters.h',
+   'include/freetype/ftcid.h',
+@@ -318,20 +317,6 @@ else
+   assert(false, 'Invalid zlib option ' + zlib_option)
+ endif
+ 
+-# BZip2 support.
+-bzip2_dep = dependency('bzip2', required: false)
+-if not bzip2_dep.found()
+-  bzip2_dep = cc.find_library('bz2',
+-    has_headers: ['bzlib.h'],
+-    required: get_option('bzip2'))
+-endif
+-
+-if bzip2_dep.found()
+-  ftoption_command += ['--enable=FT_CONFIG_OPTION_USE_BZIP2']
+-  ft2_sources += files(['src/bzip2/ftbzip2.c',])
+-  ft2_deps += [bzip2_dep]
+-endif
+-
+ # PNG support.
+ libpng_dep = dependency('libpng',
+   required: get_option('png'),
+@@ -476,7 +461,6 @@ summary({'OS': host_machine.system(),
+         }, section: 'Operating System')
+ 
+ summary({'Zlib': zlib_option,
+-         'Bzip2': bzip2_dep.found() ? 'yes' : 'no',
+          'Png': libpng_dep.found() ? 'yes' : 'no',
+          'Harfbuzz': harfbuzz_dep.found() ? 'yes' : 'no',
+          'Brotli': brotli_dep.found() ? 'yes' : 'no',
