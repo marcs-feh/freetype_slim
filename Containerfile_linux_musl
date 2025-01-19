@@ -7,5 +7,5 @@ FROM Base AS Build
 
 WORKDIR /build
 
-ENTRYPOINT ["/usr/bin/env", "sh", "-c", "busybox sh build_ft.sh"]
+ENTRYPOINT ["/usr/bin/env", "sh", "-c", "busybox sh build_ft.sh freetype_slim_musl"]
 
