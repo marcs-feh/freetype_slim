@@ -1,6 +1,6 @@
 from debian:11 as Base
 
 apt update
-apt install -y gcc busybox meson ninja-build unzip
+apt install -y gcc busybox meson ninja-build unzip zip
 
 
