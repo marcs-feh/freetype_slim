@@ -1,6 +1,19 @@
 from debian:11 as Base
 
+set -eu
+
+# podman run --rm -it -v $(pwd):/build debian:bookworm-slim
 apt update
 apt install -y gcc busybox meson ninja-build unzip zip
 
+cd /build
+rm -rf freetype
+unzip FreeType-v2.13.3.zip
+mv FreeType-v2.13.3 freetype
+cp build_ft.sh freetype/build_ft.sh
+cp fix_meson.patch freetype/fix_meson.patch
+
+cd freetype
+busybox patch meson.build fix_meson.patch
+busybox sh build_ft.sh
 
