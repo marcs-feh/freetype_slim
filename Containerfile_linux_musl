@@ -1,0 +1,11 @@
+FROM alpine:3.19 AS Base
+
+RUN apk update
+RUN apk add --no-cache gcc busybox meson ninja-build unzip zip patch musl-dev
+
+FROM Base AS Build
+
+WORKDIR /build
+
+ENTRYPOINT ["/usr/bin/env", "sh", "-c", "busybox sh build_ft.sh"]
+
