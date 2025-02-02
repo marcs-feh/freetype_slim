@@ -1,4 +1,4 @@
-FROM debian:11 AS Base
+FROM ubuntu:jammy AS Base
 
 RUN apt update
 RUN apt install -y g++ gcc busybox meson ninja-build unzip zip git
