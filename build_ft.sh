@@ -30,7 +30,7 @@ meson setup ft_build \
 	--default-library static \
 	--buildtype minsize \
 	--prefix "$(pwd)/ft_install" \
-	-Dharfbuzz=disabled \
+	-Dharfbuzz=enabled \
 	-Dbrotli=disabled \
 	-Dbzip2=disabled \
 	-Dmmap=disabled \
