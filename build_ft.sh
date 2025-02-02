@@ -22,6 +22,14 @@ $Patcher --help ||
 
 $Patcher meson.build ../fix_meson.patch
 
+jmpBack="$(pwd)"
+
+cd subprojects
+sed "s,#(SUBPROJECT_DIR),file://$(pwd)," harfbuzz.wrap.template  > harfbuzz.wrap
+
+cd "$jmpBack"
+
+
 # Create build dir and compile
 mkdir -p ./ft_install
 mkdir -p ./ft_build

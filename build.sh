@@ -8,8 +8,8 @@ podman rm freetype_slim_builder
 podman unshare rm -rf freetype
 
 # glibc (eww)
-podman build -f Containerfile_linux_glibc -t freetype-slim-linux-glibc
-podman run --replace --name freetype_slim_builder -v $(pwd):/build freetype-slim-linux-glibc:latest
-podman rm freetype_slim_builder
-podman unshare rm -rf freetype
+# podman build -f Containerfile_linux_glibc -t freetype-slim-linux-glibc
+# podman run --replace --name freetype_slim_builder -v $(pwd):/build freetype-slim-linux-glibc:latest
+# podman rm freetype_slim_builder
+# podman unshare rm -rf freetype
 
