@@ -22,13 +22,13 @@ $Patcher --help ||
 
 $Patcher meson.build ../fix_meson.patch
 
+# Patch wrap files
 jmpBack="$(pwd)"
 
 cd subprojects
-sed "s,#(SUBPROJECT_DIR),file://$(pwd)," harfbuzz.wrap.template  > harfbuzz.wrap
-
+sed "s,#(SUBPROJECT_DIR),file://$(pwd)," harfbuzz.wrap.template > harfbuzz.wrap
+sed "s,#(SUBPROJECT_DIR),file://$(pwd)," zlib.wrap.template > zlib.wrap
 cd "$jmpBack"
-
 
 # Create build dir and compile
 mkdir -p ./ft_install
