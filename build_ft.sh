@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+WorkerCount=$(($(nproc) * 2))
+
+export NINJA_OPTIONS="-j=$WorkerCount"
+
 OutputFile="$1"
 [ -z "$OutputFile" ] && {
 	echo 'You need to provide an output file'
@@ -46,7 +50,7 @@ meson setup ft_build \
 	-Dtests=disabled \
 	-Dzlib=internal
 
-ninja -v -j$(($(nproc) * 2)) -C ft_build install
+ninja -v -j$WorkerCount -C ft_build install
 
 # Package it out
 mkdir ft_out
