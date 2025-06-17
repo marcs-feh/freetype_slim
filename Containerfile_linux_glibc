@@ -1,7 +1,7 @@
-FROM ubuntu:jammy AS Base
+FROM debian:bullseye AS Base
 
 RUN apt update
-RUN apt install -y g++ gcc busybox meson ninja-build unzip zip git
+RUN apt install -y g++ gcc busybox cmake ninja-build unzip zip git
 
 FROM Base AS Build
 

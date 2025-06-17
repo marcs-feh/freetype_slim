@@ -18,14 +18,6 @@ unzip FreeType-v2.13.3.zip
 mv FreeType-v2.13.3 freetype
 cd freetype
 
-# Apply meson patch
-Patcher="patch"
-
-$Patcher --help ||
-	Patcher='busybox patch'
-
-$Patcher meson.build ../fix_meson.patch
-
 # Patch wrap files
 jmpBack="$(pwd)"
 
@@ -39,17 +31,27 @@ cd "$jmpBack"
 mkdir -p ./ft_install
 mkdir -p ./ft_build
 
-meson setup ft_build \
-	--default-library static \
-	--buildtype minsize \
-	--prefix "$(pwd)/ft_install" \
-	-Dharfbuzz=disabled \
-	-Dbrotli=disabled \
-	-Dbzip2=disabled \
-	-Dmmap=disabled \
-	-Dpng=disabled \
-	-Dtests=disabled \
-	-Dzlib=internal
+# meson setup ft_build \
+# 	--default-library static \
+# 	--buildtype minsize \
+# 	--prefix "$(pwd)/ft_install" \
+# 	-Dharfbuzz=disabled \
+# 	-Dbrotli=disabled \
+# 	-Dbzip2=disabled \
+# 	-Dmmap=disabled \
+# 	-Dpng=disabled \
+# 	-Dtests=disabled \
+# 	-Dzlib=internal
+
+cmake -B ft_build -GNinja \
+	-D CMAKE_INSTALL_PREFIX=$(pwd)/ft_install \
+	-D CMAKE_BUILD_TYPE=MinSizeRel \
+	-D CMAKE_BUILD_SHARED_LIBS=false \
+	-D FT_DISABLE_ZLIB=TRUE \
+	-D FT_DISABLE_BZIP2=TRUE \
+	-D FT_DISABLE_PNG=TRUE \
+	-D FT_DISABLE_HARFBUZZ=TRUE \
+	-D FT_DISABLE_BROTLI=TRUE \
 
 ninja -v -j$WorkerCount -C ft_build install
 
