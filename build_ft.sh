@@ -30,6 +30,7 @@ $Patcher meson.build ../fix_meson.patch
 jmpBack="$(pwd)"
 
 cd subprojects
+# NOTE: Not used, but useful if you enabled harfbuzz support
 sed "s,#(SUBPROJECT_DIR),file://$(pwd)," harfbuzz.wrap.template > harfbuzz.wrap
 sed "s,#(SUBPROJECT_DIR),file://$(pwd)," zlib.wrap.template > zlib.wrap
 cd "$jmpBack"
@@ -42,7 +43,7 @@ meson setup ft_build \
 	--default-library static \
 	--buildtype minsize \
 	--prefix "$(pwd)/ft_install" \
-	-Dharfbuzz=enabled \
+	-Dharfbuzz=disabled \
 	-Dbrotli=disabled \
 	-Dbzip2=disabled \
 	-Dmmap=disabled \
@@ -58,6 +59,7 @@ cp docs/FTL.TXT ft_out/LICENSE
 cp -r ft_install/include/freetype2 ft_out
 
 for lib in $(find ft_install -name '*.a'); do
+	strip "$lib"
 	cp "$lib" ft_out
 done
 
