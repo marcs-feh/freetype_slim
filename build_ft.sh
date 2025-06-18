@@ -61,7 +61,6 @@ cp docs/FTL.TXT ft_out/LICENSE
 cp -r ft_install/include/freetype2 ft_out
 
 for lib in $(find ft_install -name '*.a'); do
-	strip "$lib"
 	cp "$lib" ft_out
 done
 
